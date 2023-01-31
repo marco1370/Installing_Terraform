@@ -1,3 +1,4 @@
+
 # Installing_Terraform
 ## Installing Terraform and Working With Terraform Providers
 # Introduction
@@ -5,31 +6,43 @@ In this hands-on lab, we'll go through installing and configuring Terraform vers
 
 # Solution
 1. Log in to the lab server using the credentials provided:
+
 ``
 ssh cloud_user@<PublicIP>
+
 ``
 
 2. In a web browser, log in to the AWS Management Console using the credentials provided.
 
 ## Download And Manually Install the Terraform Binary
 1.Download the appropriate Terraform binary package for the provided lab server VM (Linux 64-bit) using the wget command:
+
 ``
 wget -c https://releases.hashicorp.com/terraform/0.13.4/terraform_0.13.4_linux_amd64.zip
+
 ``
+
 2. Unzip the downloaded file:
+
 ``
 unzip terraform_0.13.4_linux_amd64.zip
+
 ``
 3. Place the Terraform binary in the PATH of the VM operating system so the binary is accessible system-wide to all users:
+
 ``
 sudo mv terraform /usr/sbin/
+
 ``
 Note: If prompted, enter the username and password provided for the lab server.
 
 4. Check the Terraform version information:
+
 ``
 terraform version
+
 ``
+
 Since the Terraform version is returned, you have validated that the Terraform binary is installed and working properly.
 
 ## Clone Over Code for Terraform Providers
@@ -46,7 +59,10 @@ cd providers/
 vim main.tf
 ``
 4. Paste in the following code from the provided GitHub repo:
+
+
 ``
+
 provider "aws" {
   alias  = "us-east-1"
   region = "us-east-1"
@@ -67,31 +83,45 @@ resource "aws_sns_topic" "topic-us-west" {
   provider = aws.us-west-2
   name     = "topic-us-west"
 }
+
 ``
+
 5. To save and exit the file, press Escape and enter :wq.
 
 ## Deploy the Code with Terraform Apply
 1. Enable verbose output logging for Terraform commands using TF_LOG=TRACE:
+
 ``
 export TF_LOG=TRACE
+
 ``
 Note: You can turn off verbose logging at any time using the export TF_LOG= command.
 
+``
+
 2. Initialize the working directory where the code is located:
+
 ``
 terraform init
 
 ``
+
 3. Review the actions performed when you deploy the Terraform code:
+
 ``
 terraform plan
+
 ``
+
 Note: Two resources will be created, consistent with the providers that were configured in the provided code snippet.
 
 4. Deploy the code:
+
 ``
 terraform apply
+
 ``
+
 5. When prompted, type yes and press Enter.
 
 6. Verify that two resources were created with their corresponding Amazon Resource Name (ARN) IDs in the region in which they were spun up.
